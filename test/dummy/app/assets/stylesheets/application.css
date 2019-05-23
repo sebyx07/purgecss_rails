@@ -1,0 +1,15 @@
+.unused{
+    color: red;
+}
+
+.used-html{
+    color: blue;
+}
+
+.used-js{
+    color: blue;
+}
+
+.used-helper{
+    color: red
+}

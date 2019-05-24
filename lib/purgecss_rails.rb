@@ -1,5 +1,4 @@
-require "purgecss_rails/railtie"
-require_relative "./purgecss_rails/builder"
+require "purgecss_rails/builder"
 
 module PurgecssRails
   def self.configure(purge_css_path: "purgecss", &block)
@@ -14,7 +13,11 @@ module PurgecssRails
   end
 
   def self.run_now!
-    return unless @@enabled
+    begin
+      @@enabled
+    rescue NameError
+      return
+    end
     @@configuration.call(PurgecssRails::Builder.new(purge_css_path: @@purge_css_path))
   end
 end

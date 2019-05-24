@@ -16,6 +16,11 @@ module PurgecssRails
     end
 
     def optimize!
+      print "\n"
+      @css_files.each do |f|
+        print "purging #{f}\n"
+      end
+
       @result = `#{purge_css_executable} --css #{@css_files.join(" ")} --content #{html_files_match.join(" ")}`
       @result = JSON.parse(result)
 
@@ -24,6 +29,7 @@ module PurgecssRails
         File.write(file_name, result_item["css"])
 
         zipped = "#{file_name}.gz"
+        print "zipping #{zipped}\n"
 
         Zlib::GzipWriter.open(zipped) do |gz|
           gz.mtime = File.mtime(file_name)

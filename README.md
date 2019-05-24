@@ -1,5 +1,5 @@
 # PurgecssRails
-Short description and motivation.
+Reduce the bloat in your Rails CSS files using PurgeCSS. You can easily configure it to work with most rails apps.
 
 ## Usage
 

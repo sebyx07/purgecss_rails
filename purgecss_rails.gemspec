@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.version     = PurgecssRails::VERSION
   spec.authors     = ["sebi"]
   spec.email       = ["gore.sebyx@yahoo.com"]
-  spec.homepage    = "https://www.google.com"
-  spec.summary     = "Use PurgeCSS with rails, designed for Asset Pipeline"
-  spec.description = "Reduce your css files considerably and improve your users experience"
+  spec.homepage    = "https://github.com/sebyx07/purgecss_rails"
+  spec.summary     = "PurgeCSS wrapper which can be used with Rails Asset Pipeline"
+  spec.description = "Reduce the bloat in your Rails CSS files"
   spec.license     = "MIT"
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

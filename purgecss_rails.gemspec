@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors     = ["sebi"]
   spec.email       = ["gore.sebyx@yahoo.com"]
   spec.homepage    = "https://www.google.com"
-  spec.summary     = "Summary of PurgecssRails."
-  spec.description = "Description of PurgecssRails."
+  spec.summary     = "Use PurgeCSS with rails, designed for Asset Pipeline"
+  spec.description = "Reduce your css files considerably and improve your users experience"
   spec.license     = "MIT"
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

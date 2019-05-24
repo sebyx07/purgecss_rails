@@ -5,8 +5,9 @@ module PurgecssRails
       @css_files = []
     end
 
-    def search_css_files(path)
+    def search_css_files(path, ignore: [])
       @css_files += Dir[path]
+      @ignored_names = ignore
       self
     end
 
@@ -15,13 +16,26 @@ module PurgecssRails
       self
     end
 
+    def ignore_files
+      return @ignore_files if @ignore_files.present?
+      @ignore_files = @css_files.select do |f|
+        included = true
+        @ignored_names.each do |ignored_name|
+          if f.include?(ignored_name)
+            break included = false
+          end
+        end
+        included
+      end
+    end
+
     def optimize!
       print "\n"
-      @css_files.each do |f|
+      ignore_files.each do |f|
         print "purging #{f}\n"
       end
 
-      @result = `#{purge_css_executable} --css #{@css_files.join(" ")} --content #{html_files_match.join(" ")}`
+      @result = `#{purge_css_executable} --css #{ignore_files.join(" ")} --content #{html_files_match.join(" ")}`
       @result = JSON.parse(result)
 
       result.each do |result_item|
@@ -43,6 +57,7 @@ module PurgecssRails
     def refresh!
       @css_files = []
       @html_files_match = []
+      @ignore_files = []
     end
 
     private

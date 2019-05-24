@@ -1,9 +1,15 @@
 # PurgecssRails
 Reduce the bloat in your Rails CSS files using PurgeCSS. You can easily configure it to work with most rails apps.
 
-## Usage
-
 ## Installation
+
+First you would need a `purgecss` executable.
+you can easily add by:
+
+```bash
+yarn add purgecss
+```
+
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -20,44 +26,47 @@ Or install it yourself as:
 $ gem install purgecss_rails
 ```
 
+## Usage
+
 Define a file lib/tasks/purge_css.rake and put:
 
 ```ruby
-    require "purgecss_rails"
-    
-    desc "PurgeCSS"
-    namespace :purge_css do
-      task :clear do
-        `rm public/assets/*.css -rf`
-        `rm public/assets/*.css.gz -rf`
-      end
-    
-      task :run do
-        PurgecssRails.configure do |purge|
-          purge.search_css_files("public/assets/**/*.css")
-    
-          purge.match_html_files "public/assets/**/*.js",
-                                 "app/views/**/*.html.erb",
-                                 "app/helpers/**/*.rb"
-    
-          purge.optimize!
-        end.enable!.run_now!
-      end
-    end
+require "purgecss_rails"
+
+namespace :purge_css do
+  desc "Clear previous CSS files, this busts the CSS cache"
+  task :clear do
+    `rm public/assets/*.css -rf`
+    `rm public/assets/*.css.gz -rf`
+  end
+
+  desc "Optimize css files with PurgeCSS"
+  task :run do
+    PurgecssRails.configure(purge_css_path: "node_modules/purgecss/bin/purgecss") do |purge|
+      purge.search_css_files("public/assets/**/*.css")
+
+      purge.match_html_files "public/assets/**/*.js",
+                             "app/views/**/*.html.erb",
+                             "app/helpers/**/*.rb"
+
+      purge.optimize!
+    end.enable!.run_now!
+  end
+end
 ```
 
 If you need more precision in purging the css, ex engines:
 
 ```ruby
-    PurgecssRails.configure do |purge|
-      purge.search_css_files("public/assets/my_engine/application.css")
+PurgecssRails.configure(purge_css_path: `purgecss`) do |purge|
+  purge.search_css_files("public/assets/my_engine/application.css")
 
-      purge.match_html_files "public/assets/my_engine/application.js",
-                             "engines/my_engine/views/**/*.html.erb",
-                             "app/helpers/**/*.rb"
+  purge.match_html_files "public/assets/my_engine/application.js",
+                         "engines/my_engine/views/**/*.html.erb",
+                         "app/helpers/**/*.rb"
 
-      purge.optimize!
-    end.enable!.run_now!
+  purge.optimize!
+end.enable!.run_now!
 ```
 
 When you are using an external engine and you don't want to purge their css file, add a ingore

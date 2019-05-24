@@ -77,5 +77,15 @@ When you are using an external engine and you don't want to purge their css file
 
 you can also call `purge.refresh!` and reuse the the `purge` object
 
+## Deployment
+
+Heroku Procfile example
+
+`release: rake purge_css:clear assets:precompile purge_css:run`
+
+Other
+
+`rake purge_css:clear assets:precompile purge_css:run`
+
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

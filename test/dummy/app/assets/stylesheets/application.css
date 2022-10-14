@@ -1,9 +1,14 @@
-.unused{
+.unused {
     color: red;
+    --unused-variable: black;
+
 }
 
 .used-html{
     color: blue;
+    animation: used-animation;
+    --used-variable: white;
+    background-color: var(--used-variable);
 }
 
 .used-js{
@@ -12,4 +17,25 @@
 
 .used-helper{
     color: red
+}
+
+
+@keyframes used-animation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes unused-animation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }

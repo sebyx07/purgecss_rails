@@ -8,7 +8,7 @@ class PurgecssRails::Test < ActiveSupport::TestCase
 
   def test_configure
     PurgecssRails.configure(purge_css_path: "purgecss") do |b|
-      b.search_css_files("./test/dummy/public/assets/*.css")
+      b.search_css_files("./test/dummy/public/assets/*.css", keyframes: true, variables: true)
 
       b.match_html_files "./test/dummy/app/views/**/*.html.erb",
                          "./test/dummy/public/assets/**/*.js",
@@ -24,5 +24,9 @@ class PurgecssRails::Test < ActiveSupport::TestCase
     assert output_css.include?("used-html")
     assert output_css.include?("used-js")
     assert output_css.include?("used-helper")
+    assert output_css.include?("used-animation")
+    assert_not output_css.include?("unused-animation")
+    assert output_css.include?("--used-variable")
+    assert_not output_css.include?("--unused-variable")
   end
 end

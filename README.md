@@ -75,6 +75,11 @@ When you are using an external engine and you don't want to purge their css file
 ```
 
 
+If you want to remove unused @keyframes animations or unused css variables add these parameters:
+```ruby
+  purge.search_css_files("public/assets/**/*.css", ignore: ['rails_admin'], keyframes: true, variables: true)    
+```
+
 you can also call `purge.refresh!` and reuse the the `purge` object
 
 ## Deployment
